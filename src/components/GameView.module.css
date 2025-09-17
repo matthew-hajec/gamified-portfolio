@@ -1,0 +1,11 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+.scroller {
+    /* Expand to child content width so offsetWidth matches <Game /> width */
+    width: max-content;
+    height: max-content;
+}

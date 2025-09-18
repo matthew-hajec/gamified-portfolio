@@ -7,5 +7,5 @@
 .scroller {
     /* Expand to child content width so offsetWidth matches <Game /> width */
     width: max-content;
-    height: max-content;
+    height: 100%;
 }

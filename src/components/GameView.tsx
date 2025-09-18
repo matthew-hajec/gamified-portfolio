@@ -71,7 +71,7 @@ export default function GameView() {
     return (    
         <div ref={containerRef} className={styles.container}>
             <div ref={gameRef} className={styles.scroller} style={{ transform: `translateX(${-scrollX}px)` }}>
-                <Game />
+                <Game scrollX={scrollX}/>
             </div>
         </div>
   )

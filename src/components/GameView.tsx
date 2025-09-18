@@ -4,6 +4,7 @@ import styles from './GameView.module.css';
 
 export default function GameView() {
     const [scrollX, setScrollX] = useState(0)
+    const [keysDown, setKeysDown] = useState<{[key: string]: boolean}>({})
 
     const containerRef = useRef<HTMLDivElement>(null)
     const gameRef = useRef<HTMLDivElement>(null)
@@ -26,6 +27,14 @@ export default function GameView() {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
+        setKeysDown(keys => ({...keys, [event.key]: true}))
+    }
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+         setKeysDown(keys => ({...keys, [event.key]: false}))
+    }
+
+    useEffect(() => {
         const containerWidth = containerRef.current ? containerRef.current.offsetWidth : 0
         const gameWidth = gameRef.current ? gameRef.current.offsetWidth : 0
 
@@ -34,12 +43,13 @@ export default function GameView() {
             return
         }
 
-        if(["ArrowRight", "d", "D"].includes(event.key)) {
+        if(keysDown["ArrowRight"] || keysDown["d"] || keysDown["D"]) {
             setScrollX(scrollX => Math.min(maxScrollXRef.current, scrollX + 10))
-        } else if (["ArrowLeft", "a", "A"].includes(event.key)) {
+        } else if (keysDown["ArrowLeft"] || keysDown["a"] || keysDown["A"]) {
             setScrollX(scrollX => Math.max(minScrollXRef.current, scrollX - 10))
         }
-    }
+
+    }, [keysDown])
 
     useEffect(() => {
         updateBounds()
@@ -51,8 +61,10 @@ export default function GameView() {
 
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown)
+        window.addEventListener("keyup", handleKeyUp)
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
+            window.removeEventListener("keyup", handleKeyUp)
         }
     }, [])
 

@@ -14,9 +14,9 @@ export default function GameView() {
             const minScrollX = 0
             const maxScrollX = gameWidth - containerWidth
 
-            if (event.key === "ArrowRight" || event.key === "d" || event.key === "D") {
+            if (["ArrowRight", "d", "D"].includes(event.key)) {
                 setScrollX(scrollX => Math.min(maxScrollX, scrollX + 1))
-            } else if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") {
+            } else if (["ArrowLeft", "a", "A"].includes(event.key)) {
                 setScrollX(scrollX => Math.max(minScrollX, scrollX - 1))
             }
         }
